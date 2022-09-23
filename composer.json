@@ -1,0 +1,17 @@
+{
+    "name": "kirsten/pdc10-classes",
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Config\\": "config/"
+        }
+    },
+    "authors": [
+        {
+            "name": "strcurseten",
+            "email": "fernandez.kirstenpear@auf.edu.ph"
+        }
+    ],
+    "require": {}
+}
