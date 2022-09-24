@@ -1,6 +1,6 @@
 <?php
 require (dirname(dirname(__FILE__)) . '/init.php');
-use App\Teacher;
+use App\Course;
 
 ?>
 
@@ -11,12 +11,16 @@ use App\Teacher;
         <div class="container">
             <form method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" name="employeeID">
+                    <label class="form-label">Student ID</label>
+                    <input type="text" class="form-control" name="studentID">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Program</label>
+                    <input type="text" class="form-control" name="program">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
@@ -38,9 +42,9 @@ use App\Teacher;
 
 if (isset($_POST['submit_info'])) {
 
-    $teacher = new Teacher($_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']);
-    $teacher->setConnection($connection);
-    $teacher->save(); 
+    $student = new Student($_POST['name'], $_POST['studentID'], $_POST['phoneNumber'], $_POST['email'], $_POST['program']);
+    $student->setConnection($connection);
+    $student->save(); 
 
 }
 

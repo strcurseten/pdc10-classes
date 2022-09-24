@@ -14,12 +14,17 @@ class Teacher
 	// Database Connection Object
 	protected $connection;
 
-	public function __construct($name, $phoneNumber, $email, $employeeId)
+	public function __construct(
+	$name = null, 
+	$phoneNumber = null, 
+	$email = null, 
+	$employeeId = null)
+
 	{
 		$this->name = $name;
 		$this->phoneNumber = $phoneNumber;
         $this->email = $email;
-        $this->employeId = $employeeId;
+        $this->employeeId = $employeeId;
 	}
 
 	public function getId()
@@ -62,7 +67,7 @@ class Teacher
 				':name' => $this->getName(),
 				':phoneNumber' => $this->getPhoneNumber(),
 				':email' => $this->getEmail(),
-				':employeId' => $this->getEmployeeId()
+				':employeeId' => $this->getEmployeeId()
 			]);
 
 		} catch (Exception $e) {

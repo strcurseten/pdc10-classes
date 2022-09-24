@@ -2,5 +2,5 @@
 
 $host = 'localhost';
 $database = 'pdc10_classes';
-$user = "";
+$user = "root";
 $password = "";

@@ -15,13 +15,18 @@ class Student
 	// Database Connection Object
 	protected $connection;
 
-	public function __construct($name, $studentId, $phoneNumber, $email, $program)
+	public function __construct(
+		$name = null, 
+		$studentId = null, 
+		$phoneNumber = null, 
+		$email = null, 
+		$program = null)
 	{
 		$this->name = $name;
         $this->studentId = $studentId;
 		$this->phoneNumber = $phoneNumber;
         $this->email = $email;
-        $this->employeId = $program;
+        $this->program = $program;
 	}
 
 	public function getId()
@@ -62,7 +67,13 @@ class Student
 	public function save()
 	{
 		try {
-			$sql = "INSERT INTO students SET name=:name, studentId:=studentId, phoneNumber=:phoneNumber, email=:email, program=:program";
+			$sql = "INSERT INTO students 
+			SET name=:name, 
+			studentId=:studentId, 
+			phoneNumber=:phoneNumber, 
+			email=:email, 
+			program=:program";
+
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([

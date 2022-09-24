@@ -1,6 +1,6 @@
 <?php
 require (dirname(dirname(__FILE__)) . '/init.php');
-use App\Teacher;
+use App\Course;
 
 ?>
 
@@ -11,20 +11,20 @@ use App\Teacher;
         <div class="container">
             <form method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" name="employeeID">
+                    <label class="form-label">Class Code</label>
+                    <input type="text" class="form-control" name="classCode">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-control" name="description">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber">
+                    <label class="form-label">Teacher ID</label>
+                    <input type="text" class="form-control" name="teacherID">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
@@ -38,9 +38,9 @@ use App\Teacher;
 
 if (isset($_POST['submit_info'])) {
 
-    $teacher = new Teacher($_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']);
-    $teacher->setConnection($connection);
-    $teacher->save(); 
+    $course = new Course($_POST['name'], $_POST['classCode'], $_POST['description'], $_POST['teacherID']);
+    $course->setConnection($connection);
+    $course->save(); 
 
 }
 

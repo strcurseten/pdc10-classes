@@ -3,7 +3,7 @@
 namespace App;
 use \PDO;
 
-class Classes
+class Course
 {
 	protected $id;
 	protected $name;
@@ -14,7 +14,11 @@ class Classes
 	// Database Connection Object
 	protected $connection;
 
-	public function __construct($name, $classCode, $description, $teacherId)
+	public function __construct(
+		$name = null, 
+		$classCode = null, 
+		$description = null, 
+		$teacherId = null)
 	{
 		$this->name = $name;
 		$this->classCode = $classCode;

@@ -4,7 +4,7 @@ include "vendor/autoload.php";
 include "config/database.php";
 
 use App\Connection;
-use App\Classes;
+use App\Course;
 use App\Teacher;
 use App\Student;
 use App\ClassRoster;
