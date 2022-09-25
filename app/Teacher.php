@@ -90,7 +90,9 @@ class Teacher
 			$this->name = $row['name'];
 			$this->phoneNumber = $row['phoneNumber'];
 			$this->email = $row['email'];
-			$this->employeeId = $row['employeeId'];
+			$this->employeeId = $row['employeeID'];
+
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -137,6 +139,7 @@ class Teacher
 			$sql = 'SELECT * FROM teachers';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

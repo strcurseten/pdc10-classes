@@ -41,6 +41,8 @@ $allTeachers = $teacher->getAll();
                         <td><?php echo $teacher['name'] ?></td>
                         <td><?php echo $teacher['email'] ?></td>
                         <td><?php echo $teacher['phoneNumber'] ?></td>
+                        <td><a href="edit.php?id=<?php echo $teacher['id']; ?>" class="btn btn-primary" name="edit">Update</a></td>
+                        <td><a href="delete.php?id=<?php echo $teacher['id']; ?>" class="btn btn-primary" name="delete">Remove</a></td>
                     </tr>
                 <?php 
                 }
