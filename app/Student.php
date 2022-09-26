@@ -102,34 +102,39 @@ class Student
 
 			$this->id = $row['id'];
 			$this->name = $row['name'];
-            $this->studentId = $row['studentId'];
+            $this->studentID = $row['studentID'];
 			$this->phoneNumber = $row['phoneNumber'];
 			$this->email = $row['email'];
 			$this->program = $row['program'];
+
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
-	public function update($name, $studentId, $phoneNumber, $email, $program)
+	public function update($id, $name, $studentId, $phoneNumber, $email, $program)
 	{
 		try {
-			$sql = 'UPDATE students SET name=?, studentId=?, phoneNumber=?, $email=?, program=? WHERE id=?';
+			$sql = 'UPDATE students SET name=:name, studentId=:studentId, phoneNumber=:phoneNumber, email=:email, program=:program WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$name,
-                $studentId,
-				$phoneNumber,
-				$email,
-				$program,
-				$this->getId()
+				':id' => $id,
+				':name' => $name,
+                ':studentId' => $studentId,
+				':phoneNumber' => $phoneNumber,
+				':email' => $email,
+				':program' => $program,
 			]);
+
+			$this->id = $id;
 			$this->name = $name;
             $this->studentId = $studentId;
 			$this->phoneNumber = $phoneNumber;
 			$this->email = $email;
 			$this->program = $program;
+			
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

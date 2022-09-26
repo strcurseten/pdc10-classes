@@ -3,12 +3,9 @@ require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Teacher;
 
 $id = $_GET['id'];
-$teachers = new Teacher('');
-$teachers->setConnection($connection);
-$teachers->getById($id); 
-$teacher[]= $teachers;
-var_dump($teacher);
-
+$teacher = new Teacher('');
+$teacher->setConnection($connection);
+$teacherInfo = $teacher->getById($id);
 
 ?>
 
@@ -18,34 +15,25 @@ var_dump($teacher);
     <body>
         <div class="container">
             <form method="POST">
-
-                <?php
-                //foreach ($teachers as $info) {
-
-                ?>
                 <div class="mb-3">
                     <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" name="employeeID"><?php echo $teachers['employeeId'] ?>
+                    <input type="text" class="form-control" name="employeeID" value="<?php echo $teacherInfo['employeeID'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control" name="name" value="<?php echo $info['name'] ?>">
+                    <input type="text" class="form-control" name="name" value="<?php echo $teacherInfo['name'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="<?php echo $info['email'] ?>">
+                    <input type="email" class="form-control" name="email" value="<?php echo $teacherInfo['email'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber" value="<?php echo $info['phoneNumber'] ?>">
+                    <input type="text" class="form-control" name="phoneNumber" value="<?php echo $teacherInfo['phoneNumber'] ?>">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
                 </div>
-
-                <?php
-                //}
-                ?>
             </form>
         </div>
     </body>
@@ -55,11 +43,10 @@ var_dump($teacher);
 
 if (isset($_POST['submit_info'])) {
 
-    $teacher = new Teacher($_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']);
-    $teacher->setConnection($connection);
-    $teacher->update(); 
+        $student->update($studentInfo['id'], $_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']); 
+        header("Location: index.php");
+        exit();
 
 }
-
 
 ?>

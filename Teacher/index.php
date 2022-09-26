@@ -14,9 +14,6 @@ $allTeachers = $teacher->getAll();
         <h1>TEACHERS</h1>
         <div class="container">
             <a href="add.php" class="btn btn-primary">Add Teacher</a>
-            <a href="" class="btn btn-primary">View Classes</a>
-            <a href="edit.php" class="btn btn-primary">Update</a>
-            <a href="delete.php" class="btn btn-primary">Remove</a>
         </div>
         <div class="container">
             <table class="table table-borderless">

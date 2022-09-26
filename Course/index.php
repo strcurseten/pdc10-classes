@@ -14,9 +14,6 @@ $courses = $course->getAll();
         <h1>CLASSES</h1>
         <div class="container">
             <a href="add.php" class="btn btn-primary">Add Class</a>
-            <a href="" class="btn btn-primary">View Classes</a>
-            <a href="edit.php" class="btn btn-primary">Update</a>
-            <a href="delete.php" class="btn btn-primary">Remove</a>
         </div>
         <div class="container">
             <table class="table table-borderless">
@@ -41,6 +38,8 @@ $courses = $course->getAll();
                         <td><?php echo $course['name'] ?></td>
                         <td><?php echo $course['description'] ?></td>
                         <td><?php echo $course['teacherID'] ?></td>
+                        <td><a href="edit.php?id=<?php echo $course['id']; ?>" class="btn btn-primary" name="edit">Update</a></td>
+                        <td><a href="delete.php?id=<?php echo $course['id']; ?>" class="btn btn-primary" name="delete">Remove</a></td>
                     </tr>
                 <?php 
                 }

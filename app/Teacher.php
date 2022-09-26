@@ -99,22 +99,27 @@ class Teacher
 		}
 	}
 
-	public function update($name, $phoneNumber, $email, $employeeId)
+	public function update($id, $name, $phoneNumber, $email, $employeeID)
 	{
 		try {
-			$sql = 'UPDATE teachers SET name=?, phoneNumber=?, $email=?, employeeId=? WHERE id=?';
+			$sql = 'UPDATE teachers SET name=:name, phoneNumber=:phoneNumber, email=:email, employeeID=:employeeID WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
+
 			$statement->execute([
-				$name,
-				$phoneNumber,
-				$email,
-				$employeeId,
-				$this->getId()
+				':id' => $id,
+				':name' => $name,
+				':phoneNumber' => $phoneNumber,
+				':email' => $email,
+				':employeeID' => $employeeID
 			]);
+
+			$this->id = $id;
 			$this->name = $name;
 			$this->phoneNumber = $phoneNumber;
 			$this->email = $email;
-			$this->employeeId = $employeeId;
+			$this->employeeID = $employeeID;
+
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

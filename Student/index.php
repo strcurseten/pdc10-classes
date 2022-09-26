@@ -14,9 +14,7 @@ $students = $student->getAll();
         <h1>STUDENTS</h1>
         <div class="container">
             <a href="add.php" class="btn btn-primary">Add Student</a>
-            <a href="" class="btn btn-primary">View Classes</a>
-            <a href="edit.php" class="btn btn-primary">Update</a>
-            <a href="delete.php" class="btn btn-primary">Remove</a>
+
         </div>
         <div class="container">
             <table class="table table-borderless">
@@ -43,6 +41,8 @@ $students = $student->getAll();
                         <td><?php echo $student['phoneNumber'] ?></td>
                         <td><?php echo $student['email'] ?></td>
                         <td><?php echo $student['program'] ?></td>
+                        <td><a href="edit.php?id=<?php echo $student['id']; ?>" class="btn btn-primary" name="edit">Update</a></td>
+                        <td><a href="delete.php?id=<?php echo $student['id']; ?>" class="btn btn-primary" name="delete">Remove</a></td>
                     </tr>
                 <?php 
                 }

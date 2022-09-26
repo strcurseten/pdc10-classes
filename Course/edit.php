@@ -2,6 +2,11 @@
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
 
+$id = $_GET['id'];
+$course = new Course('');
+$course->setConnection($connection);
+$courseInfo = $course->getById($id);
+
 ?>
 
 <html>
@@ -12,19 +17,19 @@ use App\Course;
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Class Code</label>
-                    <input type="text" class="form-control" name="classCode">
+                    <input type="text" class="form-control" name="classCode" value="<?php echo $courseInfo['classCode'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" value="<?php echo $courseInfo['name'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Description</label>
-                    <input type="text" class="form-control" name="description">
+                    <input type="text" class="form-control" name="description" value="<?php echo $courseInfo['description'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Teacher ID</label>
-                    <input type="text" class="form-control" name="teacherID">
+                    <input type="text" class="form-control" name="teacherID" value="<?php echo $courseInfo['teacherID'] ?>">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
@@ -38,11 +43,10 @@ use App\Course;
 
 if (isset($_POST['submit_info'])) {
 
-    $course = new Course($_POST['name'], $_POST['classCode'], $_POST['description'], $_POST['teacherID']);
-    $course->setConnection($connection);
-    $course->save(); 
+        $course->update($courseInfo['id'], $_POST['name'], $_POST['classCode'], $_POST['description'], $_POST['teacherID']); 
+        header("Location: index.php");
+        exit();
 
 }
-
 
 ?>

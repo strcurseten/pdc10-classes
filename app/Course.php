@@ -89,29 +89,34 @@ class Course
 			$this->name = $row['name'];
 			$this->classCode = $row['classCode'];
 			$this->description = $row['description'];
-			$this->teacherId = $row['teacherId'];
+			$this->teacherID = $row['teacherID'];
+
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
-	public function update($name, $classCode, $description, $teacherId)
+	public function update($id, $name, $classCode, $description, $teacherId)
 	{
 		try {
-			$sql = 'UPDATE classes SET name=?, classCode=?, $description=?, teacherId=? WHERE id=?';
+			$sql = 'UPDATE classes SET name=:name, classCode=:classCode, description=:description, teacherId=:teacherId WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$name,
-				$classCode,
-				$description,
-				$teacherId,
-				$this->getId()
+				':id' => $id,
+				':name' => $name,
+				':classCode' => $classCode,
+				':description' => $description,
+				':teacherId' => $teacherId,
 			]);
+
+			$this->id = $id;
 			$this->name = $name;
 			$this->classCode = $classCode;
 			$this->description = $description;
 			$this->teacherId = $teacherId;
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
