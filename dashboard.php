@@ -12,66 +12,66 @@
         }
         .card {
             background-color: #E0E4FB;
-            height: 450px;
-            width: 320px;
+            height: 400px;
+            width: 270px;
+            border-radius: 20px;
         }
         .card:hover{
             transform: scale(1.02);
             background-color: #6159E6;
             color: white;
+            box-shadow: 3px 5px 15px -5px #000000;
         }
         .card-title {
             padding: 30px 30px;
             color: #332D9D;
+            font-weight: bold;
         }
 
-        img {
-
-        }
         a {
             text-decoration: none;
         }
-
+        
     </style>
 
     <body>
         <div class="container-fluid m-5">
             <h1><b>DASHBOARD</b></h1>
-                <div class="row mt-4">
+                <div class="row mt-4 g-0">
                     
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <a href="student/index.php">
                             <div class="card">
-                                    <h2 class="card-title">Students</h2>
-                                    <img src="student.png" class="card-img-top" style="width:auto; height:300px;">
+                                    <h3 class="card-title">Students</h3>
+                                    <img src="student.png" class="card-img-top" style="width:260; height:260px;">
                             </div> 
                         </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <a href="teacher/index.php">
                             <div class="card">
-                                    <h2 class="card-title">Teachers</h2>
-                                    <img src="teacher.png" class="card-img-top" style="width:auto; height:300px;">
+                                    <h3 class="card-title">Teachers</h3>
+                                    <img src="teacher.png" class="card-img-top" style="width:260; height:260px;">
                             </div> 
                         </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <a href="course/index.php">
                             <div class="card">
-                                    <h2 class="card-title">Courses</h2>
-                                    <img src="course.png" class="card-img-top" style="width:auto; height:300px;">
+                                    <h3 class="card-title">Courses</h3>
+                                    <img src="course.png" class="card-img-top" style="width:260; height:260px;">
             
                             </div> 
                         </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <a href="">
                             <div class="card">
-                                    <h2 class="card-title">Rosters</h2>
-                                    <img src="roster.png" class="card-img-top" style="width:auto; height:300px;">
+                                    <h3 class="card-title">Rosters</h3>
+                                    <img src="roster.png" class="card-img-top" style="width:260; height:260px;">
                         
                             </div> 
                         </a>

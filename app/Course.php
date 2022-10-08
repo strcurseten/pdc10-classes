@@ -145,4 +145,24 @@ class Course
 			error_log($e->getMessage());
 		}
 	}
+
+	public function getTeacherName()
+	{
+		try {
+			$sql = 'SELECT name FROM teachers';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
+
+			$row = $statement->fetch();
+
+			$this->name = $row['name'];
+
+			return $row;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
 }

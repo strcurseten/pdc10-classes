@@ -6,6 +6,7 @@ $id = $_GET['id'];
 $course = new Course('');
 $course->setConnection($connection);
 $courseInfo = $course->getById($id);
+$teachername = $course->getTeacherName();
 
 ?>
 
@@ -30,6 +31,13 @@ $courseInfo = $course->getById($id);
                 <div class="mb-3">
                     <label class="form-label">Teacher ID</label>
                     <input type="text" class="form-control" name="teacherID" value="<?php echo $courseInfo['teacherID'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Teacher</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Teacher</option>
+                        <option value="<?php //echo $courseInfo['teacherID'] ?>"><?php //echo $courseInfo['teacherID']['name'] ?></option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
