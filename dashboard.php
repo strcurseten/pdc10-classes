@@ -15,18 +15,30 @@
             height: 400px;
             width: 270px;
             border-radius: 20px;
+            transition: 0.1s;
         }
-        .card:hover{
+
+        .card:hover{ 
             transform: scale(1.02);
+            transition: 0.2s;
             background-color: #6159E6;
             color: white;
-            box-shadow: 3px 5px 15px -5px #000000;
+            box-shadow: 3px 5px 15px -7px #000000;
+            
         }
         .card-title {
             padding: 30px 30px;
             color: #332D9D;
             font-weight: bold;
         }
+
+        #parent:hover #child{
+            color: white;
+        }
+
+        /* .card-title:hover {
+            color: white;
+        } */
 
         a {
             text-decoration: none;
@@ -41,8 +53,8 @@
                     
                     <div class="col-sm-3">
                         <a href="student/index.php">
-                            <div class="card">
-                                    <h3 class="card-title">Students</h3>
+                            <div class="card" id="parent">
+                                    <h3 class="card-title" id="child">Students</h3>
                                     <img src="student.png" class="card-img-top" style="width:260; height:260px;">
                             </div> 
                         </a>
@@ -50,8 +62,8 @@
 
                     <div class="col-sm-3">
                         <a href="teacher/index.php">
-                            <div class="card">
-                                    <h3 class="card-title">Teachers</h3>
+                            <div class="card" id="parent">
+                                    <h3 class="card-title" id="child">Teachers</h3>
                                     <img src="teacher.png" class="card-img-top" style="width:260; height:260px;">
                             </div> 
                         </a>
@@ -59,8 +71,8 @@
 
                     <div class="col-sm-3">
                         <a href="course/index.php">
-                            <div class="card">
-                                    <h3 class="card-title">Courses</h3>
+                            <div class="card" id="parent">
+                                    <h3 class="card-title" id="child">Courses</h3>
                                     <img src="course.png" class="card-img-top" style="width:260; height:260px;">
             
                             </div> 
@@ -69,8 +81,8 @@
 
                     <div class="col-sm-3">
                         <a href="">
-                            <div class="card">
-                                    <h3 class="card-title">Rosters</h3>
+                            <div class="card" id="parent">
+                                    <h3 class="card-title" id="child">Rosters</h3>
                                     <img src="roster.png" class="card-img-top" style="width:260; height:260px;">
                         
                             </div> 
