@@ -26,6 +26,15 @@ $students = $student->getAll();
         a {
             margin-right: 5px;
         }
+        table {
+            background-color: #E0E4FB;
+            border-radius: 10px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #6159E6;
+            color: white;
+        }
     </style>
     <body>
         <div class="container-fluid m-5">
@@ -35,7 +44,7 @@ $students = $student->getAll();
 
         </div>
         <div class="container">
-            <table class="table table-borderless">
+            <table class="table table-hover table-borderless">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>

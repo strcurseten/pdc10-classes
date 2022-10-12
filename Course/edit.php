@@ -1,12 +1,16 @@
 <?php
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
+use App\Teacher;
 
 $id = $_GET['id'];
 $course = new Course('');
 $course->setConnection($connection);
 $courseInfo = $course->getById($id);
-$teachername = $course->getTeacherName();
+
+$teachers = new Teacher('');
+$teachers->setConnection($connection);
+$teacher = $teachers->getAll();
 
 ?>
 
@@ -29,14 +33,12 @@ $teachername = $course->getTeacherName();
                     <input type="text" class="form-control" name="description" value="<?php echo $courseInfo['description'] ?>">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Teacher ID</label>
-                    <input type="text" class="form-control" name="teacherID" value="<?php echo $courseInfo['teacherID'] ?>">
-                </div>
-                <div class="mb-3">
                     <label class="form-label">Teacher</label>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Teacher</option>
-                        <option value="<?php //echo $courseInfo['teacherID'] ?>"><?php //echo $courseInfo['teacherID']['name'] ?></option>
+                    <select class="form-select" aria-label="Default select example" name="teacherID">
+                        <option selected>Select Teacher</option>
+                        <?php foreach($teacher as $data){ ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="mb-3">

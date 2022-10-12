@@ -16,6 +16,7 @@
             width: 270px;
             border-radius: 20px;
             transition: 0.1s;
+            padding: 0px;
         }
 
         .card:hover{ 
@@ -35,10 +36,6 @@
         #parent:hover #child{
             color: white;
         }
-
-        /* .card-title:hover {
-            color: white;
-        } */
 
         a {
             text-decoration: none;

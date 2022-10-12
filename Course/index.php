@@ -1,6 +1,8 @@
 <?php
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
+use App\Teacher;
+
 $course = new Course('');
 $course->setConnection($connection);
 $courses = $course->getAll();
@@ -26,6 +28,15 @@ $courses = $course->getAll();
         a {
             margin-right: 5px;
         }
+        table {
+            background-color: #E0E4FB;
+            border-radius: 10px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #6159E6;
+            color: white;
+        }
     </style>
     <body>
         <div class="container-fluid m-5">
@@ -34,7 +45,7 @@ $courses = $course->getAll();
             <a href="add.php" class="btn btn-primary">Add Class</a>
         </div>
         <div class="container">
-            <table class="table table-borderless">
+            <table class="table table-hover table-borderless">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -49,6 +60,11 @@ $courses = $course->getAll();
                 <?php
                         foreach ($courses as $course){
 
+                            $id = $course['teacherID'];
+                            $teacher = new Teacher('');
+                            $teacher->setConnection($connection);
+                            $teacherInfo = $teacher->getById($id);
+
                 ?>
                     <tr>
                         <th scope="row"><?php echo $course['id'] ?></th>
@@ -56,6 +72,7 @@ $courses = $course->getAll();
                         <td><?php echo $course['name'] ?></td>
                         <td><?php echo $course['description'] ?></td>
                         <td><?php echo $course['teacherID'] ?></td>
+                        <td><?php echo $teacherInfo['name'] ?></td>
                         <td>
                             <a href="edit.php?id=<?php echo $course['id']; ?>" class="btn btn-primary" name="edit">Update</a>
                             <a href="delete.php?id=<?php echo $course['id']; ?>" class="btn btn-primary" name="delete">Remove</a>
