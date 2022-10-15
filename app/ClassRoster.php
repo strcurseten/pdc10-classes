@@ -5,6 +5,7 @@ use \PDO;
 
 class ClassRoster
 {
+	protected $id;
 	protected $classCode;
     protected $studentId;
 	protected $enrolledDate;
@@ -12,11 +13,19 @@ class ClassRoster
 	// Database Connection Object
 	protected $connection;
 
-	public function __construct($classCode, $studentId, $enrolledDate)
+	public function __construct(
+		$classCode = null, 
+		$studentId = null, 
+		$enrolledDate = null)
 	{
-		$this->name = $name;
+		$this->classCode = $classCode;
         $this->studentId = $studentId;
 		$this->enrolledDate = $enrolledDate;
+	}
+
+	public function getId()
+	{
+		return $this->id;
 	}
 
 	public function getClassCode()
@@ -115,6 +124,46 @@ class ClassRoster
 			$sql = 'SELECT * FROM class_rosters';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function getRoster(){
+		try {
+			$sql = 'SELECT class_rosters.classCode as class_code, classes.name AS class_name, teachers.name as teacher_name, COUNT(classCode) as students_enrolled
+			 FROM class_rosters
+			 INNER JOIN classes 
+			 ON class_rosters.classCode = classes.code
+			 INNER JOIN teachers
+			 ON classes.teacherID = teachers.employeeID
+			 GROUP BY class_code';
+			$data = $this->connection->query($sql)->fetchAll();
+			return $data;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function getTeacherName($id)
+	{
+		try {
+			$sql = 'SELECT teachers.name FROM teachers
+			JOIN course
+			ON teachers.id = course.teacherID';
+			$statement = $this->connection->prepare($sql)->fetch();
+			
+			// $statement->execute([
+			// 	':id' => $id
+			// ]);
+
+			// $row = $statement->fetch();
+
+			// $this->id = $row['id'];
+			// $this->classCode = $row['classCode'];
+            // $this->studentId = $row['studentId'];
+			// $this->enrolledDate = $row['enrolledDate'];
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

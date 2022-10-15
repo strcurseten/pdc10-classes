@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <a href="">
+                        <a href="roster/index.php">
                             <div class="card" id="parent">
                                     <h3 class="card-title" id="child">Rosters</h3>
                                     <img src="roster.png" class="card-img-top" style="width:260; height:260px;">

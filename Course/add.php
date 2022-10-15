@@ -2,6 +2,11 @@
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
 
+$teachers = new Teacher('');
+$teachers->setConnection($connection);
+$teacher = $teachers->getAll();
+
+
 ?>
 
 <html>
@@ -23,8 +28,13 @@ use App\Course;
                     <input type="text" class="form-control" name="description">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Teacher ID</label>
-                    <input type="text" class="form-control" name="teacherID">
+                    <label class="form-label">Teacher</label>
+                    <select class="form-select" aria-label="Default select example" name="teacherID">
+                        <option selected>Select Teacher</option>
+                        <?php foreach($teacher as $data){ ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
