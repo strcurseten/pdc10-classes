@@ -12,7 +12,7 @@ use App\Teacher;
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" name="employeeID">
+                    <input type="text" class="form-control" name="employee_id">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
@@ -38,7 +38,7 @@ use App\Teacher;
 
 if (isset($_POST['submit_info'])) {
 
-    $teacher = new Teacher($_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']);
+    $teacher = new Teacher($_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employee_id']);
     $teacher->setConnection($connection);
     $teacher->save(); 
     header("Location: index.php");

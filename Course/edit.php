@@ -22,7 +22,7 @@ $teacher = $teachers->getAll();
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Class Code</label>
-                    <input type="text" class="form-control" name="classCode" value="<?php echo $courseInfo['classCode'] ?>">
+                    <input type="text" class="form-control" name="code" value="<?php echo $courseInfo['code'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
@@ -34,7 +34,7 @@ $teacher = $teachers->getAll();
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Teacher</label>
-                    <select class="form-select" aria-label="Default select example" name="teacherID">
+                    <select class="form-select" aria-label="Default select example" name="teacher_id">
                         <option selected>Select Teacher</option>
                         <?php foreach($teacher as $data){ ?>
                         <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
@@ -53,7 +53,7 @@ $teacher = $teachers->getAll();
 
 if (isset($_POST['submit_info'])) {
 
-        $course->update($courseInfo['id'], $_POST['name'], $_POST['classCode'], $_POST['description'], $_POST['teacherID']); 
+        $course->update($courseInfo['id'], $_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']); 
         header("Location: index.php");
         exit();
 

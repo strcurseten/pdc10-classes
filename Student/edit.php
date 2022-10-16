@@ -21,11 +21,11 @@ $studentInfo = $student->getById($id);
                     <input type="text" class="form-control" name="name" value="<?php echo $studentInfo['name'] ?>">
                 </div>
                     <label class="form-label">Student ID</label>
-                    <input type="text" class="form-control" name="studentID" value="<?php echo $studentInfo['studentID'] ?>">
+                    <input type="text" class="form-control" name="student_id" value="<?php echo $studentInfo['student_id'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber" value="<?php echo $studentInfo['phoneNumber'] ?>">
+                    <input type="text" class="form-control" name="phone_number" value="<?php echo $studentInfo['phone_number'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
@@ -47,7 +47,7 @@ $studentInfo = $student->getById($id);
 
 if (isset($_POST['submit_info'])) {
 
-        $student->update($studentInfo['id'], $_POST['name'], $_POST['studentID'], $_POST['phoneNumber'], $_POST['email'], $_POST['program']); 
+        $student->update($studentInfo['id'], $_POST['name'], $_POST['student_id'], $_POST['phone_number'], $_POST['email'], $_POST['program']); 
         header("Location: index.php");
         exit();
 

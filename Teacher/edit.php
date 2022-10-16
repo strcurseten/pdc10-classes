@@ -17,7 +17,7 @@ $teacherInfo = $teacher->getById($id);
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" name="employeeID" value="<?php echo $teacherInfo['employeeID'] ?>">
+                    <input type="text" class="form-control" name="employee_id" value="<?php echo $teacherInfo['employee_id'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
@@ -29,7 +29,7 @@ $teacherInfo = $teacher->getById($id);
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber" value="<?php echo $teacherInfo['phoneNumber'] ?>">
+                    <input type="text" class="form-control" name="phone_number" value="<?php echo $teacherInfo['phone_number'] ?>">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
@@ -43,7 +43,7 @@ $teacherInfo = $teacher->getById($id);
 
 if (isset($_POST['submit_info'])) {
 
-        $student->update($studentInfo['id'], $_POST['name'], $_POST['phoneNumber'], $_POST['email'], $_POST['employeeID']); 
+        $teacher->update($teacherInfo['id'], $_POST['name'], $_POST['phone_number'], $_POST['email'], $_POST['employee_id']); 
         header("Location: index.php");
         exit();
 

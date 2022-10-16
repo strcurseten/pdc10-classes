@@ -7,8 +7,8 @@ class Student
 {
 	protected $id;
 	protected $name;
-    protected $studentId;
-	protected $phoneNumber;
+    protected $student_id;
+	protected $phone_number;
 	protected $email;
 	protected $program;
 
@@ -17,14 +17,14 @@ class Student
 
 	public function __construct(
 		$name = null, 
-		$studentId = null, 
-		$phoneNumber = null, 
+		$student_id = null, 
+		$phone_number = null, 
 		$email = null, 
 		$program = null)
 	{
 		$this->name = $name;
-        $this->studentId = $studentId;
-		$this->phoneNumber = $phoneNumber;
+        $this->student_id = $student_id;
+		$this->phone_number = $phone_number;
         $this->email = $email;
         $this->program = $program;
 	}
@@ -41,12 +41,12 @@ class Student
 
     public function getStudentId() 
     {
-        return $this->studentId;
+        return $this->student_id;
     }
 
 	public function getPhoneNumber()
 	{
-		return $this->phoneNumber;
+		return $this->phone_number;
 	}
 
 	public function getEmail()
@@ -69,8 +69,8 @@ class Student
 		try {
 			$sql = "INSERT INTO students 
 			SET name=:name, 
-			studentId=:studentId, 
-			phoneNumber=:phoneNumber, 
+			student_id=:student_id, 
+			phone_number=:phone_number, 
 			email=:email, 
 			program=:program";
 
@@ -78,8 +78,8 @@ class Student
 
 			return $statement->execute([
 				':name' => $this->getName(),
-                ':studentId' => $this->getStudentId(),
-				':phoneNumber' => $this->getPhoneNumber(),
+                ':student_id' => $this->getStudentId(),
+				':phone_number' => $this->getPhoneNumber(),
 				':email' => $this->getEmail(),
 				':program' => $this->getProgram()
 			]);
@@ -102,8 +102,8 @@ class Student
 
 			$this->id = $row['id'];
 			$this->name = $row['name'];
-            $this->studentID = $row['studentID'];
-			$this->phoneNumber = $row['phoneNumber'];
+            $this->student_id = $row['student_id'];
+			$this->phone_number = $row['phone_number'];
 			$this->email = $row['email'];
 			$this->program = $row['program'];
 
@@ -114,24 +114,24 @@ class Student
 		}
 	}
 
-	public function update($id, $name, $studentId, $phoneNumber, $email, $program)
+	public function update($id, $name, $student_id, $phone_number, $email, $program)
 	{
 		try {
-			$sql = 'UPDATE students SET name=:name, studentId=:studentId, phoneNumber=:phoneNumber, email=:email, program=:program WHERE id=:id';
+			$sql = 'UPDATE students SET name=:name, student_id=:student_id, phone_number=:phone_number, email=:email, program=:program WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				':id' => $id,
 				':name' => $name,
-                ':studentId' => $studentId,
-				':phoneNumber' => $phoneNumber,
+                ':student_id' => $student_id,
+				':phone_number' => $phone_number,
 				':email' => $email,
 				':program' => $program,
 			]);
 
 			$this->id = $id;
 			$this->name = $name;
-            $this->studentId = $studentId;
-			$this->phoneNumber = $phoneNumber;
+            $this->student_id = $student_id;
+			$this->phone_number = $phone_number;
 			$this->email = $email;
 			$this->program = $program;
 			
@@ -159,6 +159,47 @@ class Student
 			$sql = 'SELECT * FROM students';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function viewClasses($student_id)
+	{
+		try {
+			$sql = 'SELECT * FROM class_roster 
+			WHERE teacher_id=:teacher_id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':teacher_id' => $teacher_id
+			]);
+
+			$row = $statement->fetchAll();
+			return $row;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function getClasses($id)
+	{
+		try {
+			$sql = 'SELECT class_rosters.class_code AS class_id,
+			classes.name AS class_name,
+			classes.code AS class_code
+			FROM class_rosters
+			INNER JOIN classes
+			ON class_rosters.class_code = classes.id
+			WHERE student_id=:id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
+
+			$row = $statement->fetchAll();
+			return $row;
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

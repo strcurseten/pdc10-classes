@@ -1,6 +1,7 @@
 <?php
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
+use App\Teacher;
 
 $teachers = new Teacher('');
 $teachers->setConnection($connection);
@@ -17,7 +18,7 @@ $teacher = $teachers->getAll();
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Class Code</label>
-                    <input type="text" class="form-control" name="classCode">
+                    <input type="text" class="form-control" name="code">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
@@ -29,7 +30,7 @@ $teacher = $teachers->getAll();
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Teacher</label>
-                    <select class="form-select" aria-label="Default select example" name="teacherID">
+                    <select class="form-select" aria-label="Default select example" name="teacher_id">
                         <option selected>Select Teacher</option>
                         <?php foreach($teacher as $data){ ?>
                         <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
@@ -50,7 +51,7 @@ if (isset($_POST['submit_info'])) {
 
     try{
 
-        $course = new Course($_POST['name'], $_POST['classCode'], $_POST['description'], $_POST['teacherID']);
+        $course = new Course($_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']);
         $course->setConnection($connection);
         $course->save(); 
         header("Location: index.php");

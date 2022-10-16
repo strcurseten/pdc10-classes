@@ -12,7 +12,7 @@ use App\Student;
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Student ID</label>
-                    <input type="text" class="form-control" name="studentID">
+                    <input type="text" class="form-control" name="student_id">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
@@ -28,7 +28,7 @@ use App\Student;
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber">
+                    <input type="text" class="form-control" name="phone_number">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="Submit" name="submit_info">
@@ -42,7 +42,7 @@ use App\Student;
 
 if (isset($_POST['submit_info'])) {
 
-    $student = new Student($_POST['name'], $_POST['studentID'], $_POST['phoneNumber'], $_POST['email'], $_POST['program']);
+    $student = new Student($_POST['name'], $_POST['student_id'], $_POST['phone_number'], $_POST['email'], $_POST['program']);
     $student->setConnection($connection);
     $student->save(); 
     header("Location: index.php");

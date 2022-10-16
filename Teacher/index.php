@@ -70,10 +70,10 @@ $allTeachers = $teacher->getAll();
                 ?>
                     <tr>
                         <th scope="row"><?php echo $teacher['id'] ?></th>
-                        <td><?php echo $teacher['employeeID'] ?></td>
+                        <td><?php echo $teacher['employee_id'] ?></td>
                         <td><?php echo $teacher['name'] ?></td>
                         <td><?php echo $teacher['email'] ?></td>
-                        <td><?php echo $teacher['phoneNumber'] ?></td>
+                        <td><?php echo $teacher['phone_number'] ?></td>
                         <td>
                             <a href="view.php?id=<?php echo $teacher['id']; ?>" class="btn btn-primary" name="view">View Courses</a>
                             <a href="edit.php?id=<?php echo $teacher['id']; ?>" class="btn btn-primary" name="edit">
@@ -82,13 +82,24 @@ $allTeachers = $teacher->getAll();
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
                             </a>
-                            <a href="delete.php?id=<?php echo $teacher['id']; ?>" class="btn btn-primary" name="delete">
+                            <a onclick="confirmation()" class="btn btn-primary" name="delete">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                                     </svg>
                             </a>
                         </td>
                     </tr>
+
+                    <script>
+                        function confirmation(){
+                            var del=confirm("Are you sure you want to delete this record?");
+                            if (del==true){
+                                window.location.href="delete.php?id=<?php echo $teacher['id']; ?>";
+                            }
+                            return del;
+                        }
+                    </script>
+                    
                 <?php 
                 }
                 ?>

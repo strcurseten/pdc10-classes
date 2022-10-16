@@ -2,12 +2,15 @@
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\ClassRoster;
 use App\Course;
-use App\Teacher;
-use App\Student;
 
-$classRoster = new ClassRoster('');
-$classRoster->setConnection($connection);
-$roster = $classRoster->getRoster();
+$id = $_GET['id'];
+$getRosters = new ClassRoster('');
+$getRosters->setConnection($connection);
+$rosters = $getRosters->getByClassId($id);
+
+$getCourse = new Course('');
+$getCourse->setConnection($connection);
+$course = $getCourse->getById($id);
 
 ?>
 
@@ -49,16 +52,18 @@ $roster = $classRoster->getRoster();
     </style>
     <body>
         <div class="container-fluid m-5">
-        <h1>Class Roster</h1>
+        <h1><?php echo $course['name'] ?></h1>
+        <div class="container">
+                <a href="add.php?id=<?php echo $_GET['id'] ?>" class="btn btn-primary">Enroll Student</a>
+        </div>
         <div class="container">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <!-- <th scope="col">ID</th> -->
-                        <th scope="col">Course Code</th>
-                        <th scope="col">Course Name</th>
-                        <th scope="col">Teacher Name</th>
-                        <th scope="col">Students Enrolled</th>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Enrolled Date</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -67,23 +72,31 @@ $roster = $classRoster->getRoster();
 
                 <?php
 
-                        foreach ($roster as $value){
-                            // $id = $value['id'];
-                            // $getClassRoster = new ClassRoster('');
-                            // $getClassRoster->setConnection($connection);
-                            // $rosterValue = $getClassRoster->getRoster($id);
+                        foreach ($rosters as $data){
+                            $student_id = $data['student_id'];
+                            $viewStudents = new ClassRoster('');
+                            $viewStudents->setConnection($connection);
+                            $students = $viewStudents->getStudentInfo($student_id);
 
                 ?>
                     <tr>
-                        <td><?php echo $value['class_code'] ?></td>
-                        <td><?php echo $value['class_name'] ?></td>
-                        <td><?php echo $value['teacher_name'] ?></td>
-                        <td><?php echo $value['students_enrolled'] ?></td>
+                        <th scope="row"><?php echo $students['student_id'] ?></th>
+                        <td><?php echo $students['student_name'] ?></td>
+                        <td><?php echo $students['enrolled_date'] ?></td>
                         <td>
-                            <a href="view.php?id=<?php echo $value['class_id']; ?>" class="btn btn-primary" name="edit">View Students</a>
-
+                            <a onclick="confirmation()" class="btn btn-primary" name="delete">Remove</a>
                         </td>
                     </tr>
+
+                    <script>
+                        function confirmation(){
+                            var del=confirm("Are you sure you want to delete this record?");
+                            if (del==true){
+                                window.location.href="delete.php?id=<?php echo $data['id'] ?>&course=<?php echo $_GET['id'] ?>";
+                            }
+                            return del;
+                        }
+                    </script>
                 <?php 
                 }
                 ?>

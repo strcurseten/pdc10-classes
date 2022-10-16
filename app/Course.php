@@ -7,23 +7,23 @@ class Course
 {
 	protected $id;
 	protected $name;
-	protected $classCode;
+	protected $code;
 	protected $description;
-	protected $teacherId;
+	protected $teacher_id;
 
 	// Database Connection Object
 	protected $connection;
 
 	public function __construct(
 		$name = null, 
-		$classCode = null, 
+		$code = null, 
 		$description = null, 
-		$teacherId = null)
+		$teacher_id = null)
 	{
 		$this->name = $name;
-		$this->classCode = $classCode;
+		$this->code = $code;
 		$this->description = $description;
-		$this->teacherId = $teacherId;
+		$this->teacher_id = $teacher_id;
 	}
 
 	public function getId()
@@ -36,9 +36,9 @@ class Course
 		return $this->name;
 	}
 
-	public function getClassCode()
+	public function getCode()
 	{
-		return $this->classCode;
+		return $this->code;
 	}
 
 	public function getDescription()
@@ -48,7 +48,7 @@ class Course
 
 	public function getTeacherId()
 	{
-		return $this->teacherId;
+		return $this->teacher_id;
 	}
 
 	public function setConnection($connection)
@@ -59,14 +59,14 @@ class Course
 	public function save()
 	{
 		try {
-			$sql = "INSERT INTO classes SET name=:name, classCode=:classCode, description=:description, teacherId=:teacherId";
+			$sql = "INSERT INTO classes SET name=:name, code=:code, description=:description, teacher_id=:teacher_id";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([
 				':name' => $this->getName(),
-				':classCode' => $this->getClassCode(),
+				':code' => $this->getCode(),
 				':description' => $this->getDescription(),
-				':teacherId' => $this->getTeacherId()
+				':teacher_id' => $this->getTeacherId()
 			]);
 
 		} catch (Exception $e) {
@@ -87,9 +87,9 @@ class Course
 
 			$this->id = $row['id'];
 			$this->name = $row['name'];
-			$this->classCode = $row['classCode'];
+			$this->code = $row['code'];
 			$this->description = $row['description'];
-			$this->teacherID = $row['teacherID'];
+			$this->teacher_id = $row['teacher_id'];
 
 			return $row;
 
@@ -98,24 +98,24 @@ class Course
 		}
 	}
 
-	public function update($id, $name, $classCode, $description, $teacherId)
+	public function update($id, $name, $code, $description, $teacher_id)
 	{
 		try {
-			$sql = 'UPDATE classes SET name=:name, classCode=:classCode, description=:description, teacherId=:teacherId WHERE id=:id';
+			$sql = 'UPDATE classes SET name=:name, code=:code, description=:description, teacher_id=:teacher_id WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				':id' => $id,
 				':name' => $name,
-				':classCode' => $classCode,
+				':code' => $code,
 				':description' => $description,
-				':teacherId' => $teacherId,
+				':teacher_id' => $teacher_id,
 			]);
 
 			$this->id = $id;
 			$this->name = $name;
-			$this->classCode = $classCode;
+			$this->code = $code;
 			$this->description = $description;
-			$this->teacherId = $teacherId;
+			$this->teacher_id = $teacher_id;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -146,10 +146,14 @@ class Course
 		}
 	}
 
-	public function getTeacherName()
+	public function getTeacherName($id)
 	{
 		try {
-			$sql = 'SELECT name FROM teachers';
+			$sql = 'SELECT teachers.name AS teacher_name 
+			FROM teachers
+			INNER JOIN classes
+			ON teachers.id = classes.teacher_id 
+			WHERE classes.teacher_id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				':id' => $id
@@ -157,7 +161,8 @@ class Course
 
 			$row = $statement->fetch();
 
-			$this->name = $row['name'];
+			//$this->id = $row['id'];
+			$this->teacher_name = $row['teacher_name'];
 
 			return $row;
 

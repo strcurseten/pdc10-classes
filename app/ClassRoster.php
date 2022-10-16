@@ -6,21 +6,21 @@ use \PDO;
 class ClassRoster
 {
 	protected $id;
-	protected $classCode;
-    protected $studentId;
-	protected $enrolledDate;
+	protected $class_code;
+    protected $student_id;
+	protected $enrolled_date;
 
 	// Database Connection Object
 	protected $connection;
 
 	public function __construct(
-		$classCode = null, 
-		$studentId = null, 
-		$enrolledDate = null)
+		$class_code = null, 
+		$student_id = null, 
+		$enrolled_date = null)
 	{
-		$this->classCode = $classCode;
-        $this->studentId = $studentId;
-		$this->enrolledDate = $enrolledDate;
+		$this->class_code = $class_code;
+        $this->student_id = $student_id;
+		$this->enrolled_date = $enrolled_date;
 	}
 
 	public function getId()
@@ -30,17 +30,17 @@ class ClassRoster
 
 	public function getClassCode()
 	{
-		return $this->classCode;
+		return $this->class_code;
 	}
 
     public function getStudentId() 
     {
-        return $this->studentId;
+        return $this->student_id;
     }
 
 	public function getEnrolledDate()
 	{
-		return $this->enrolledDate;
+		return $this->enrolled_date;
 	}
 
 	public function setConnection($connection)
@@ -51,14 +51,31 @@ class ClassRoster
 	public function save()
 	{
 		try {
-			$sql = "INSERT INTO class_rosters SET classCode=:classCode, studentId:=studentId, enrolledDate=:enrolledDate";
+			$sql = "INSERT INTO class_rosters SET class_code=:class_code, student_id=:student_id";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([
-				':classCode' => $this->getClassCode(),
-                ':studentId' => $this->getStudentId(),
-				':enrolledDate' => $this->getEnrolledDate(),
+				':class_code' => $this->getClassCode(),
+                ':student_id' => $this->getStudentId()
 			]);
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function getByClassId($class_code)
+	{
+		try {
+			$sql = 'SELECT student_id, id FROM class_rosters 
+			WHERE class_code=:class_code';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':class_code' => $class_code
+			]);
+
+			$row = $statement->fetchAll();
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -77,29 +94,31 @@ class ClassRoster
 			$row = $statement->fetch();
 
 			$this->id = $row['id'];
-			$this->classCode = $row['classCode'];
-            $this->studentId = $row['studentId'];
-			$this->enrolledDate = $row['enrolledDate'];
+			$this->name = $row['class_code'];
+			$this->code = $row['student_id'];
+			$this->description = $row['enrolled_date'];
+
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
-	public function update($classCode, $studentId, $enrolledDate)
+	public function update($class_code, $student_id, $enrolled_date)
 	{
 		try {
-			$sql = 'UPDATE class_rosters SET classCode=?, studentId=?, enrolledDate=? WHERE id=?';
+			$sql = 'UPDATE class_rosters SET class_code=?, student_id=?, enrolled_date=? WHERE id=?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$classCode,
-                $studentId,
-				$enrolledDate,
+				$class_code,
+                $student_id,
+				$enrolled_date,
 				$this->getId()
 			]);
-			$this->classCode = $classCode;
-            $this->studentId = $studentId;
-			$this->enrolledDate = $enrolledDate;
+			$this->class_code = $class_code;
+            $this->student_id = $student_id;
+			$this->enrolled_date = $enrolled_date;
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
@@ -108,10 +127,10 @@ class ClassRoster
 	public function delete()
 	{
 		try {
-			$sql = 'DELETE FROM class_rosters WHERE classCode=?';
+			$sql = 'DELETE FROM class_rosters WHERE id=?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$this->getClassCode()
+				$this->getId()
 			]);
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -131,41 +150,54 @@ class ClassRoster
 
 	public function getRoster(){
 		try {
-			$sql = 'SELECT class_rosters.classCode as class_code, classes.name AS class_name, teachers.name as teacher_name, COUNT(classCode) as students_enrolled
-			 FROM class_rosters
-			 INNER JOIN classes 
-			 ON class_rosters.classCode = classes.code
-			 INNER JOIN teachers
-			 ON classes.teacherID = teachers.employeeID
-			 GROUP BY class_code';
+			$sql = 'SELECT class_rosters.id AS roster_id,
+			classes.code AS class_code, 
+			classes.id AS class_id,
+			classes.name AS class_name, 
+			teachers.name AS teacher_name, 
+			COUNT(class_rosters.class_code) as students_enrolled
+			FROM classes
+			LEFT JOIN class_rosters 
+			ON classes.id = class_rosters.class_code
+			INNER JOIN teachers
+			ON classes.teacher_id = teachers.id
+			GROUP BY classes.code';
+
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
-	public function getTeacherName($id)
+	public function getStudentInfo($id)
 	{
 		try {
-			$sql = 'SELECT teachers.name FROM teachers
-			JOIN course
-			ON teachers.id = course.teacherID';
-			$statement = $this->connection->prepare($sql)->fetch();
-			
-			// $statement->execute([
-			// 	':id' => $id
-			// ]);
+			$sql = 'SELECT students.name AS student_name,
+			students.student_id AS student_id,
+			students.id AS id,
+			class_rosters.enrolled_date AS enrolled_date
+			FROM students
+			INNER JOIN class_rosters
+			ON class_rosters.student_id = students.id 
+			WHERE students.id=:id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
 
-			// $row = $statement->fetch();
+			$row = $statement->fetch();
 
-			// $this->id = $row['id'];
-			// $this->classCode = $row['classCode'];
-            // $this->studentId = $row['studentId'];
-			// $this->enrolledDate = $row['enrolledDate'];
+			//$this->id = $row['id'];
+			$this->student_name = $row['student_name'];
+			$this->enrolled_date = $row['enrolled_date'];
+
+			return $row;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
+
 }

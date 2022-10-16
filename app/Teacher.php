@@ -7,24 +7,24 @@ class Teacher
 {
 	protected $id;
 	protected $name;
-	protected $phoneNumber;
+	protected $phone_number;
 	protected $email;
-	protected $employeeId;
+	protected $employee_id;
 
 	// Database Connection Object
 	protected $connection;
 
 	public function __construct(
 	$name = null, 
-	$phoneNumber = null, 
+	$phone_number = null, 
 	$email = null, 
-	$employeeId = null)
+	$employee_id = null)
 
 	{
 		$this->name = $name;
-		$this->phoneNumber = $phoneNumber;
+		$this->phone_number = $phone_number;
         $this->email = $email;
-        $this->employeeId = $employeeId;
+        $this->employee_id = $employee_id;
 	}
 
 	public function getId()
@@ -39,7 +39,7 @@ class Teacher
 
 	public function getPhoneNumber()
 	{
-		return $this->phoneNumber;
+		return $this->phone_number;
 	}
 
 	public function getEmail()
@@ -49,7 +49,7 @@ class Teacher
 
 	public function getEmployeeId()
 	{
-		return $this->employeeId;
+		return $this->employee_id;
 	}
 
 	public function setConnection($connection)
@@ -60,14 +60,14 @@ class Teacher
 	public function save()
 	{
 		try {
-			$sql = "INSERT INTO teachers SET name=:name, phoneNumber=:phoneNumber, email=:email, employeeId=:employeeId";
+			$sql = "INSERT INTO teachers SET name=:name, phone_number=:phone_number, email=:email, employee_id=:employee_id";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([
 				':name' => $this->getName(),
-				':phoneNumber' => $this->getPhoneNumber(),
+				':phone_number' => $this->getPhoneNumber(),
 				':email' => $this->getEmail(),
-				':employeeId' => $this->getEmployeeId()
+				':employee_id' => $this->getEmployeeId()
 			]);
 
 		} catch (Exception $e) {
@@ -88,9 +88,9 @@ class Teacher
 
 			$this->id = $row['id'];
 			$this->name = $row['name'];
-			$this->phoneNumber = $row['phoneNumber'];
+			$this->phone_number = $row['phone_number'];
 			$this->email = $row['email'];
-			$this->employeeId = $row['employeeID'];
+			$this->employee_id = $row['employee_id'];
 
 			return $row;
 
@@ -99,25 +99,25 @@ class Teacher
 		}
 	}
 
-	public function update($id, $name, $phoneNumber, $email, $employeeID)
+	public function update($id, $name, $phone_number, $email, $employee_id)
 	{
 		try {
-			$sql = 'UPDATE teachers SET name=:name, phoneNumber=:phoneNumber, email=:email, employeeID=:employeeID WHERE id=:id';
+			$sql = 'UPDATE teachers SET name=:name, phone_number=:phone_number, email=:email, employee_id=:employee_id WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 
 			$statement->execute([
 				':id' => $id,
 				':name' => $name,
-				':phoneNumber' => $phoneNumber,
+				':phone_number' => $phone_number,
 				':email' => $email,
-				':employeeID' => $employeeID
+				':employee_id' => $employee_id
 			]);
 
 			$this->id = $id;
 			$this->name = $name;
-			$this->phoneNumber = $phoneNumber;
+			$this->phone_number = $phone_number;
 			$this->email = $email;
-			$this->employeeID = $employeeID;
+			$this->employee_id = $employee_id;
 
 
 		} catch (Exception $e) {
@@ -149,4 +149,23 @@ class Teacher
 			error_log($e->getMessage());
 		}
 	}
+
+	public function viewClasses($teacher_id)
+	{
+		try {
+			$sql = 'SELECT * FROM classes 
+			WHERE teacher_id=:teacher_id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':teacher_id' => $teacher_id
+			]);
+
+			$row = $statement->fetchAll();
+			return $row;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
 }
