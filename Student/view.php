@@ -48,12 +48,34 @@ $student = $studentName->getById($id);
             background-color: #6159E6;
             color: white;
         }
+
+        .navbar {
+            background-color: #6159E6;
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 50px;
+            width: 700px;
+        }
         
     </style>
-    <body>
-        <div class="container-fluid m-5">
-        <h1><?php echo $student['name'] ?>'s Courses</h1>
+    <body>    
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item active"><a href="../dashboard.php" class="nav-link">Dashboard</a></li>
+                        <li class="nav-item"><a href="index.php" class="nav-link">Students</a></li>
+                        <li class="nav-item"><a href="../teacher/index.php" class="nav-link">Teachers</a></li>
+                        <li class="nav-item"><a href="../course/index.php" class="nav-link">Courses</a></li>
+                        <li class="nav-item"><a href="../roster/index.php" class="nav-link">Rosters</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
+            <h1><?php echo $student['name'] ?>'s Courses</h1>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -84,7 +106,6 @@ $student = $studentName->getById($id);
                 ?>
                 </tbody>
             </table>
-        </div>
         </div>
     </body>
 </html>

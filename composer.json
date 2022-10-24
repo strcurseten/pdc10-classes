@@ -13,5 +13,7 @@
             "email": "fernandez.kirstenpear@auf.edu.ph"
         }
     ],
-    "require": {}
+    "require": {
+        "mustache/mustache": "^2.14"
+    }
 }

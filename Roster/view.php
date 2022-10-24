@@ -48,15 +48,47 @@ $course = $getCourse->getById($id);
             background-color: #6159E6;
             color: white;
         }
+
+        .navbar {
+            background-color: #6159E6;
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 50px;
+            width: 1100px;
+        }
+
+        #table-buttons {
+            text-align: center;
+        } 
+
+        #add-button {
+            background-color: #6159E6;
+            margin-top: 20px;
+            margin-left: 10px;
+            color: white;
+            font-weight: bold;
+        }
         
     </style>
-    <body>
-        <div class="container-fluid m-5">
-        <h1><?php echo $course['name'] ?></h1>
+    <body>    
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item active"><a href="../dashboard.php" class="nav-link">Dashboard</a></li>
+                        <li class="nav-item"><a href="../student/index.php" class="nav-link">Students</a></li>
+                        <li class="nav-item"><a href="../teacher/index.php" class="nav-link">Teachers</a></li>
+                        <li class="nav-item"><a href="../course/index.php" class="nav-link">Courses</a></li>
+                        <li class="nav-item"><a href="index.php" class="nav-link">Rosters</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
-                <a href="add.php?id=<?php echo $_GET['id'] ?>" class="btn btn-primary">Enroll Student</a>
-        </div>
-        <div class="container">
+            <h1><?php echo $course['name'] ?></h1>
+            <a href="add.php?id=<?php echo $_GET['id'] ?>" id="add-button" class="btn">Enroll Student</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -83,8 +115,8 @@ $course = $getCourse->getById($id);
                         <th scope="row"><?php echo $students['student_id'] ?></th>
                         <td><?php echo $students['student_name'] ?></td>
                         <td><?php echo $students['enrolled_date'] ?></td>
-                        <td>
-                            <a onclick="confirmation()" class="btn btn-primary" name="delete">Remove</a>
+                        <td id="table-buttons">
+                            <a onclick="confirmation()" class="btn" name="delete">Remove</a>
                         </td>
                     </tr>
 
@@ -102,7 +134,6 @@ $course = $getCourse->getById($id);
                 ?>
                 </tbody>
             </table>
-        </div>
         </div>
     </body>
 </html>

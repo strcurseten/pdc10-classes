@@ -140,14 +140,18 @@ class Student
 		}
 	}
 
-	public function delete()
+	public function delete($id)
 	{
 		try {
-			$sql = 'DELETE FROM students WHERE id=?';
+			$sql = 'DELETE FROM students WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$this->getId()
+				//$this->getId()
+				'id' => $id
 			]);
+
+			$this->id = $id;
+			
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

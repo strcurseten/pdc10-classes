@@ -40,14 +40,38 @@
         a {
             text-decoration: none;
         }
-        
+
+        .navbar {
+            background-color: #6159E6;
+            font-weight: bold;
+        }
+
+        .container-fluid {
+            width: 1300px;
+            justify: center;
+        }
+
     </style>
 
     <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item active"><a href="dashboard.php" class="nav-link">Dashboard</a></li>
+                        <li class="nav-item"><a href="student/index.php" class="nav-link">Students</a></li>
+                        <li class="nav-item"><a href="teacher/index.php" class="nav-link">Teachers</a></li>
+                        <li class="nav-item"><a href="course/index.php" class="nav-link">Courses</a></li>
+                        <li class="nav-item"><a href="roster/index.php" class="nav-link">Rosters</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <div class="container-fluid m-5">
             <h1><b>DASHBOARD</b></h1>
                 <div class="row mt-4 g-0">
-                    
                     <div class="col-sm-3">
                         <a href="student/index.php">
                             <div class="card" id="parent">

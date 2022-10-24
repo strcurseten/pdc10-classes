@@ -1,15 +1,28 @@
 <?php
+
+include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
-use App\Teacher;
+
+$mustache = new Mustache_Engine([
+	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
+]);
 
 $course = new Course('');
 $course->setConnection($connection);
 $courses = $course->getAll();
 
+$template = $mustache->loadTemplate('courses-index');
+echo $template->render(compact('courses'));
+
+// $id = $course['teacher_id'];
+// $teacherName = new Course('');
+// $teacherName->setConnection($connection);
+// $teacher = $teacherName->getTeacherName($id);
+
 ?>
 
-<html>
+<!-- <html>
     <title></title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -43,14 +56,46 @@ $courses = $course->getAll();
             background-color: #6159E6;
             color: white;
         }
+
+        .navbar {
+            background-color: #6159E6;
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 50px;
+            width: 1100px;
+        }
+
+        #table-buttons {
+            text-align: center;
+        } 
+
+        #add-button {
+            background-color: #6159E6;
+            margin-top: 20px;
+            margin-left: 10px;
+            color: white;
+            font-weight: bold;
+        }
     </style>
     <body>
-        <div class="container-fluid m-5">
-            <h1>CLASSES</h1>
-            <div class="container">
-                <a href="add.php" class="btn btn-primary">Add Class</a>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item active"><a href="../dashboard.php" class="nav-link">Dashboard</a></li>
+                        <li class="nav-item"><a href="../student/index.php" class="nav-link">Students</a></li>
+                        <li class="nav-item"><a href="../teacher/index.php" class="nav-link">Teachers</a></li>
+                        <li class="nav-item"><a href="index.php" class="nav-link">Courses</a></li>
+                        <li class="nav-item"><a href="../roster/index.php" class="nav-link">Rosters</a></li>
+                    </ul>
+                </div>
             </div>
+        </nav>
             <div class="container">
+            <h1>CLASSES</h1>
+            <a href="add.php" class="btn" id="add-button">Add Class</a>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -67,23 +112,23 @@ $courses = $course->getAll();
 
                     <tbody>
                         <?php
-                                foreach ($courses as $course){
+                                // foreach ($courses as $course){
 
-                                    $id = $course['teacher_id'];
-                                    $teacherName = new Course('');
-                                    $teacherName->setConnection($connection);
-                                    $teacher = $teacherName->getTeacherName($id);
+                                //     $id = $course['teacher_id'];
+                                //     $teacherName = new Course('');
+                                //     $teacherName->setConnection($connection);
+                                //     $teacher = $teacherName->getTeacherName($id);
 
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $course['id'] ?></th>
-                            <td><?php echo $course['code'] ?></td>
-                            <td><?php echo $course['name'] ?></td>
-                            <td><?php echo $course['description'] ?></td>
-                            <td><?php echo $course['teacher_id'] ?></td>
-                            <td><?php echo $teacher['teacher_name'] ?></td>
-                            <td>
-                                <a href="edit.php?id=<?php echo $course['id']; ?>" class="btn btn-primary" name="edit">
+                            <th scope="row"><?php //echo $course['id'] ?></th>
+                            <td><?php //echo $course['code'] ?></td>
+                            <td><?php //echo $course['name'] ?></td>
+                            <td><?php //echo $course['description'] ?></td>
+                            <td><?php //echo $course['teacher_id'] ?></td>
+                            <td><?php //echo $teacher['teacher_name'] ?></td>
+                            <td id="table-buttons">
+                                <a href="edit.php?id=<?php //echo $course['id']; ?>" class="btn btn-primary" name="edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -101,17 +146,17 @@ $courses = $course->getAll();
                             function confirmation(){
                                 var del=confirm("Are you sure you want to delete this record?");
                                 if (del==true){
-                                    window.location.href="delete.php?id=<?php echo $course['id']; ?>";
+                                    window.location.href="delete.php?id=<?php //echo $course['id']; ?>";
                                 }
                                 return del;
                             }
                         </script>
                         <?php 
-                        }
+                        //}
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </body>
-</html>
+</html> -->
