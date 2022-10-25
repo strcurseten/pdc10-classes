@@ -1,7 +1,12 @@
 <?php
+include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
 use App\Teacher;
+
+$mustache = new Mustache_Engine([
+	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
+]);
 
 $id = $_GET['id'];
 $course = new Course('');
@@ -12,9 +17,12 @@ $teachers = new Teacher('');
 $teachers->setConnection($connection);
 $teacher = $teachers->getAll();
 
+$template = $mustache->loadTemplate('courses-edit');
+echo $template->render(compact('courseInfo', 'teacher'));
+
 ?>
 
-<html>
+<!-- <html>
     <title>Edit Course</title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -91,16 +99,16 @@ $teacher = $teachers->getAll();
             </form>
         </div>
     </body>
-</html>
+</html> -->
 
 <?php 
 
-if (isset($_POST['submit_info'])) {
+// if (isset($_POST['submit_info'])) {
 
-        $course->update($courseInfo['id'], $_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']); 
-        header("Location: index.php");
-        exit();
+//         $course->update($courseInfo['id'], $_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']); 
+//         header("Location: index.php");
+//         exit();
 
-}
+// }
 
 ?>

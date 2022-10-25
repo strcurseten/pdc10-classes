@@ -1,10 +1,18 @@
 <?php
+include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Student;
 
+$mustache = new Mustache_Engine([
+	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
+]);
+
+$template = $mustache->loadTemplate('students-add');
+echo $template->render();
+
 ?>
 
-<html>
+<!-- <html>
     <title>Add Student</title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -80,18 +88,18 @@ use App\Student;
             </form>
         </div>
     </body>
-</html>
+</html> -->
 
 <?php 
 
-if (isset($_POST['submit_info'])) {
+// if (isset($_POST['submit_info'])) {
 
-    $student = new Student($_POST['name'], $_POST['student_id'], $_POST['phone_number'], $_POST['email'], $_POST['program']);
-    $student->setConnection($connection);
-    $student->save(); 
-    header("Location: index.php");
-    exit();
+//     $student = new Student($_POST['name'], $_POST['student_id'], $_POST['phone_number'], $_POST['email'], $_POST['program']);
+//     $student->setConnection($connection);
+//     $student->save(); 
+//     header("Location: index.php");
+//     exit();
 
-}
+// }
 
 ?>

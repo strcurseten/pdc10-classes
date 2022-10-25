@@ -49,6 +49,7 @@
         .container-fluid {
             width: 1300px;
             justify: center;
+            margin-top: 50px;
         }
 
     </style>
@@ -69,7 +70,7 @@
             </div>
         </nav>
 
-        <div class="container-fluid m-5">
+        <div class="container-fluid">
             <h1><b>DASHBOARD</b></h1>
                 <div class="row mt-4 g-0">
                     <div class="col-sm-3">

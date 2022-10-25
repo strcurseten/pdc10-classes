@@ -1,16 +1,23 @@
 <?php
+include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\Course;
 use App\Teacher;
+
+$mustache = new Mustache_Engine([
+	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
+]);
 
 $teachers = new Teacher('');
 $teachers->setConnection($connection);
 $teacher = $teachers->getAll();
 
+$template = $mustache->loadTemplate('courses-add');
+echo $template->render(compact('teacher'));
 
 ?>
 
-<html>
+<!-- <html>
     <title>Add Course</title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -76,9 +83,9 @@ $teacher = $teachers->getAll();
                     <label class="form-label">Teacher</label>
                     <select class="form-select" aria-label="Default select example" name="teacher_id">
                         <option selected>Select Teacher</option>
-                        <?php foreach($teacher as $data){ ?>
-                        <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
-                        <?php } ?>
+                        <?php //foreach($teacher as $data){ ?>
+                        <option value="<?php //echo $data['id'] ?>"><?php //echo $data['name'] ?></option>
+                        <?php //} ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -87,24 +94,24 @@ $teacher = $teachers->getAll();
             </form>
         </div>
     </body>
-</html>
+</html> -->
 
 <?php 
 
-if (isset($_POST['submit_info'])) {
+// if (isset($_POST['submit_info'])) {
 
-    try{
+//     try{
 
-        $course = new Course($_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']);
-        $course->setConnection($connection);
-        $course->save(); 
-        header("Location: index.php");
-        exit();
+//         $course = new Course($_POST['name'], $_POST['code'], $_POST['description'], $_POST['teacher_id']);
+//         $course->setConnection($connection);
+//         $course->save(); 
+//         header("Location: index.php");
+//         exit();
 
-    } catch (Exception $e) {
-        error_log($e->getMessage());
-    }
+//     } catch (Exception $e) {
+//         error_log($e->getMessage());
+//     }
 
-}
+// }
 
 ?>

@@ -1,14 +1,23 @@
 <?php
+include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 require (dirname(dirname(__FILE__)) . '/init.php');
 use App\ClassRoster;
+
+$mustache = new Mustache_Engine([
+	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
+]);
+
 
 $classRoster = new ClassRoster('');
 $classRoster->setConnection($connection);
 $roster = $classRoster->getRoster();
 
+$template = $mustache->loadTemplate('rosters-index');
+echo $template->render(compact('roster'));
+
 ?>
 
-<html>
+<!-- <html>
     <title></title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -83,7 +92,6 @@ $roster = $classRoster->getRoster();
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <!-- <th scope="col">ID</th> -->
                         <th scope="col">Course Code</th>
                         <th scope="col">Course Name</th>
                         <th scope="col">Teacher Name</th>
@@ -96,7 +104,7 @@ $roster = $classRoster->getRoster();
 
                 <?php
 
-                        foreach ($roster as $value){
+                        //foreach ($roster as $value){
                             // $id = $value['id'];
                             // $getClassRoster = new ClassRoster('');
                             // $getClassRoster->setConnection($connection);
@@ -104,20 +112,20 @@ $roster = $classRoster->getRoster();
 
                 ?>
                     <tr>
-                        <td><?php echo $value['class_code'] ?></td>
-                        <td><?php echo $value['class_name'] ?></td>
-                        <td><?php echo $value['teacher_name'] ?></td>
-                        <td><?php echo $value['students_enrolled'] ?></td>
+                        <td><?php //echo $value['class_code'] ?></td>
+                        <td><?php //echo $value['class_name'] ?></td>
+                        <td><?php //echo $value['teacher_name'] ?></td>
+                        <td><?php //echo $value['students_enrolled'] ?></td>
                         <td id="table-buttons">
-                            <a href="view.php?id=<?php echo $value['class_id']; ?>" class="btn btn-primary" name="edit">View Students</a>
+                            <a href="view.php?id=<?php //echo $value['class_id']; ?>" class="btn btn-primary" name="edit">View Students</a>
 
                         </td>
                     </tr>
                 <?php 
-                }
+                //}
                 ?>
                 </tbody>
             </table>
         </div>
     </body>
-</html>
+</html> -->

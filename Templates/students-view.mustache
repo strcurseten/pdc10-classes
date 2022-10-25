@@ -1,28 +1,5 @@
-<?php
-include (dirname(dirname(__FILE__)) . '/vendor/autoload.php');
-require (dirname(dirname(__FILE__)) . '/init.php');
-use App\Teacher;
-
-$mustache = new Mustache_Engine([
-	'loader' => new Mustache_Loader_FilesystemLoader('../templates')
-]);
-
-$id = $_GET['id'];
-$getClasses = new Teacher('');
-$getClasses->setConnection($connection);
-$classes = $getClasses->viewClasses($id);
-
-$teacherName = new Teacher('');
-$teacherName->setConnection($connection);
-$teacher = $teacherName->getById($id);
-
-$template = $mustache->loadTemplate('teachers-view');
-echo $template->render(compact('classes', 'teacher'));
-
-?>
-
-<!-- <html>
-    <title></title>
+<html>
+    <title>Course List</title>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,14 +44,14 @@ echo $template->render(compact('classes', 'teacher'));
         }
         
     </style>
-    <body>
+    <body>    
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item active"><a href="../dashboard.php" class="nav-link">Dashboard</a></li>
-                        <li class="nav-item"><a href="../student/index.php" class="nav-link">Students</a></li>
-                        <li class="nav-item"><a href="index.php" class="nav-link">Teachers</a></li>
+                        <li class="nav-item"><a href="index.php" class="nav-link">Students</a></li>
+                        <li class="nav-item"><a href="../teacher/index.php" class="nav-link">Teachers</a></li>
                         <li class="nav-item"><a href="../course/index.php" class="nav-link">Courses</a></li>
                         <li class="nav-item"><a href="../roster/index.php" class="nav-link">Rosters</a></li>
                     </ul>
@@ -82,7 +59,7 @@ echo $template->render(compact('classes', 'teacher'));
             </div>
         </nav>
         <div class="container">
-            <h1><?php //echo $teacher['name'] ?> Class List</h1>
+            <h1>{{ student.name }}'s Courses</h1>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -93,25 +70,15 @@ echo $template->render(compact('classes', 'teacher'));
                 </thead>
                 <tbody>
 
-                <?php
-
-                        //foreach ($classes as $data){
-                            // $student_id = $data['student_id'];
-                            // $viewStudents = new ClassRoster('');
-                            // $viewStudents->setConnection($connection);
-                            // $students = $viewStudents->getStudentInfo($student_id);
-
-                ?>
+                {{# classes }}
                     <tr>
-                        <th scope="row"><?php //echo $data['id'] ?></th>
-                        <td><?php //echo $data['code'] ?></td>
-                        <td><?php //echo $data['name'] ?></td>
+                        <th scope="row">{{ class_id }}</th>
+                        <td>{{ class_code }}</td>
+                        <td>{{ class_name }}</td>
                     </tr>
-                <?php 
-                //}
-                ?>
+                {{/ classes }}
                 </tbody>
             </table>
         </div>
     </body>
-</html> -->
+</html>

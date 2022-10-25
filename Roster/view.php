@@ -11,7 +11,6 @@ $rosters = $getRosters->getByClassId($id);
 $getCourse = new Course('');
 $getCourse->setConnection($connection);
 $course = $getCourse->getById($id);
-
 ?>
 
 <html>
@@ -92,7 +91,6 @@ $course = $getCourse->getById($id);
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <!-- <th scope="col">ID</th> -->
                         <th scope="col">Student ID</th>
                         <th scope="col">Student Name</th>
                         <th scope="col">Enrolled Date</th>
